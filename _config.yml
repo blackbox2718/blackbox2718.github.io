@@ -6,7 +6,7 @@
 name: My PIC16B Blog
 
 # Short bio or description (displayed in the header)
-description: Awesome Python Student
+description: Duc Vu
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://raw.githubusercontent.com/PIC16B/PIC16B.github.io/master/images/ucla-math.png
@@ -18,10 +18,10 @@ avatar: https://raw.githubusercontent.com/PIC16B/PIC16B.github.io/master/images/
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email:
+  email: ducvu2718@ucla.edu
   facebook:
   flickr:
-  github: PIC16B/pic16b.github.io # replace with your repo
+  github: blackbox2718/ducvu.github.io # replace with your repo
   instagram:
   linkedin:
   pinterest:
