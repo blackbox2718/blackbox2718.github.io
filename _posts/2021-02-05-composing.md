@@ -2,6 +2,8 @@
 layout: post
 title: Creating posts
 math: true
+categories: [Coding, PIC16B]
+tags: [example_post, reference]
 ---
 
 
