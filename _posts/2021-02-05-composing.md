@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Creating posts
+math: true
 ---
 
 
@@ -116,11 +117,13 @@ I learned something really cool from my peer feedback!
 
 Jekyll will process this code block like this: 
 
+
 {::options parse_block_html="true" /}
 <div class="got-help">
 I learned something really cool from my peer feedback! 
 </div>
 {::options parse_block_html="false" /}
+
 
 You can also use the class `gave-help` to indicate places in which you felt that your comments were able to significantly improve the code of your peers. 
 
