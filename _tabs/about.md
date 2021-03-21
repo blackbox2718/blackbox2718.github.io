@@ -8,10 +8,10 @@ Hi there, welcome to my blog! My name is Duc Vu, and I am a junior studying appl
 
 ### Bonus
 
-Since the beginning of the remote instruction period, I started to learn how to live-latex,
+Since the beginning of the remote instruction period, I started to learn how to live-Tex,
 which is a method/tool that compiles your latex file in real time, and gradually got it up
 to the speed where I can take notes live in lecture. Since then, I have managed to put
-up a collection of some of the math lecture notes that I took during my undergrad years
+up a collection of some of the math lecture notes that I have taken during my undergrad years
 at PCC and UCLA. If you're interested, please take a look at
 [this](http://tducvu.github.io/notes/). I hope you find them
 helpful to study/reference and also aesthetically pleasant to look at as math can be
