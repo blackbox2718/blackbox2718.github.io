@@ -29,7 +29,7 @@ Remember that this is still my first year at UCLA, so I will update this list mo
     <ul>
         <li><a href="/assets/lecturenotes/ccla.pdf">Math 10 - Linear Algebra and Applications</a></li>
         Instructed by Jude Socrates (Summer 2019).
-        <li><a href="assets/lecturenotes/ccode.pdf">Math 55H - Honors Ordinary Differential Equations</a></li>
+        <li><a href="/assets/lecturenotes/ccode.pdf">Math 55H - Honors Ordinary Differential Equations</a></li>
         Instructed by Pete Riley (Spring 2020).
     </ul>
 </div>
