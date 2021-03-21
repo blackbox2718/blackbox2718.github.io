@@ -15,22 +15,22 @@ Remember that this is still my first year at UCLA, so I will update this list mo
     <font size="+2.3"><b>University of California, Los Angeles</b></font>
     <ul>
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
-        Instructed by Richard Elman (Fall 2020).
+        <br>Instructed by Richard Elman (Fall 2020).
         <li> <a href="/assets/lecturenotes/analysis1.pdf">Math 131AH - Honors Real Analysis I</a></li>
-        Instructed by Monica Visan (Winter 2021).
+        <br>Instructed by Monica Visan (Winter 2021).
         <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Analysis2-131BH/master.pdf">Math 131BH - Honors Real Analysis II (In progress)</a></li>
-        Instructed by Monica Visan (Spring 2021).
+        <br>Instructed by Monica Visan (Spring 2021).
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
-        Instructed by Matthias Wink (Winter 2021).
+        <br>Instructed by Matthias Wink (Winter 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
-        Instructed by Hung Nguyen (Fall 2020).
+        <br>Instructed by Hung Nguyen (Fall 2020).
     </ul>
     <font size="+2.3"><b>Pasadena City College</b></font>
     <ul>
         <li><a href="/assets/lecturenotes/ccla.pdf">Math 10 - Linear Algebra and Applications</a></li>
-        Instructed by Jude Socrates (Summer 2019).
+        <br>Instructed by Jude Socrates (Summer 2019).
         <li><a href="/assets/lecturenotes/ccode.pdf">Math 55H - Honors Ordinary Differential Equations</a></li>
-        Instructed by Pete Riley (Spring 2020).
+        <br>Instructed by Pete Riley (Spring 2020).
     </ul>
 </div>
 {::options parse_block_html="false" /}
