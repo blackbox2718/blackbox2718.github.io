@@ -5,7 +5,7 @@ math: true
 order: 2
 ---
 
-I type up my math notes during lecture using $$\LaTeX$$ with the help of **latexmk** (live-Tex) for real-time compiling and **Vim** as a text editor. I am hugely inspired by and have learnt lots of things from Gilles Castel. For tips and tricks on how to push your note taking skills to a whole new level, please refer to his amazing works at [castel.dev](https://castel.dev). Note that in order to replicate his set up, you have to be somewhat familiar with using Vim and vimscript, which have a pretty steep learning curve, and also some basic knowledge of using the command line.
+I type up my math notes during lecture using $$\LaTeX$$ with the help of **latexmk** (live-Tex) for real-time compiling and **Vim** as a text editor. I am hugely inspired by and have learnt lots of things from Gilles Castel. For tips and tricks on how to push your note taking skills to a whole new level, please refer to his amazing works at his [blog site](https://castel.dev). Note that in order to replicate his set up, you have to be somewhat familiar with using Vim and Vimscript, which have a pretty steep learning curve, and also some basic knowledge of using the command line.
 
 On this page, you can find most of the course notes that I have taken so far at UCLA in my undergrad with the addition two last math classes at PCC that marks the beginning of this whole journey. As these were typed during live lecture, you may find some mistakes/typos scattered throughout the notes, please let me know through my [email](mailto:ducvu2718@ucla.edu) if you spot any of them. 
 
