@@ -9,3 +9,5 @@ node_modules
 package.json
 .jekyll-cache*
 _drafts/
+.ipynb*
+*/.ipynb_checkpoints/*
