@@ -9,5 +9,7 @@ node_modules
 package.json
 .jekyll-cache*
 _drafts/
+_jupyter/*.db
+_jupyter/*.csv
 .ipynb*
 */.ipynb_checkpoints/*
