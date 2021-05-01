@@ -13,3 +13,4 @@ _jupyter/*.db
 _jupyter/*.csv
 .ipynb*
 */.ipynb_checkpoints/*
+_tabs/.ipynb_checkpoints/*
