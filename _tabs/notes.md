@@ -16,15 +16,15 @@ As this is still my first year at UCLA, I will update this list more frequently 
     <ul>
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Fall 2020).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/LA-115B/master.pdf">Math 115B - Linear Algebra (In Progress)</a></li>
+        <li> <a href="/assets/lecturenotes/la2.pdf">Math 115B - Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Spring 2021).
         <li> <a href="/assets/lecturenotes/analysis1.pdf">Math 131AH - Honors Real Analysis I</a></li>
         <br>Instructed by Monica Visan (Winter 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Analysis2-131BH/master.pdf">Math 131BH - Honors Real Analysis II (In progress)</a></li>
+        <li> <a href="/assets/lecturenotes/analysis2.pdf">Math 131BH - Honors Real Analysis II</a></li>
         <br>Instructed by Monica Visan (Spring 2021).
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Optmz-164/master.pdf">Math 164 - Optimization (In Progress)</a></li>
+        <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
         <br>Instructed by Shuang Li (Spring 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
         <br>Instructed by Hung Nguyen (Fall 2020).
