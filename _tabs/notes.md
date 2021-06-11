@@ -18,10 +18,14 @@ As this is still my first year at UCLA, I will update this list more frequently 
         <br>Instructed by Richard Elman (Fall 2020).
         <li> <a href="/assets/lecturenotes/la2.pdf">Math 115B - Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Spring 2021).
+        <li> <a href="/assets/lecturenotes/la12.pdf">Math 115 - Linear Algebra</a></li>
+        <br>Combined version of the linear algebra classes above (115AH & 115B).
         <li> <a href="/assets/lecturenotes/analysis1.pdf">Math 131AH - Honors Real Analysis I</a></li>
         <br>Instructed by Monica Visan (Winter 2021).
         <li> <a href="/assets/lecturenotes/analysis2.pdf">Math 131BH - Honors Real Analysis II</a></li>
         <br>Instructed by Monica Visan (Spring 2021).
+        <li> <a href="/assets/lecturenotes/analysis12.pdf">Math 131H - Honors Real Analysis</a></li>
+        <br>Combined version of the real analysis classes above (131AH & 131BH).
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
