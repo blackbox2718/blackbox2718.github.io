@@ -11,6 +11,5 @@ package.json
 _drafts/
 _jupyter/*.db
 _jupyter/*.csv
-.ipynb*
+.ipynb_checkpoints
 */.ipynb_checkpoints/*
-_tabs/.ipynb_checkpoints/*
