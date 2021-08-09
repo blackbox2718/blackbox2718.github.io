@@ -4,7 +4,7 @@ icon: fas fa-info
 order: 1
 ---
 
-Hi there, welcome to my blog! My name is Duc Vu, and I am a junior studying applied mathematics at UCLA. I previously attended Pasadena City College as a math major and transferred during Covid-19 period :(. This blog is, in general, dedicated to PIC16B, which is a course that focuses on scientific computation and data science through the study of Python. In addition, some math related materials can be found here as well.
+Hi there, welcome to my blog! My name is Duc Vu, and I am a senior studying applied mathematics and statistics at UCLA. I previously attended Pasadena City College as a math major and transferred during Covid-19 period :(. This blog is, in general, dedicated to my interest in machine learning and data science. In addition, some math related materials can be found here as well.
 
 ### Course Notes
 

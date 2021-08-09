@@ -9,7 +9,7 @@ I type up my math notes during lecture using $$\LaTeX$$ with the help of **latex
 
 On this page, you can find most of the course notes that I have taken so far at UCLA in my undergrad with the addition two last math classes at PCC that marks the beginning of this whole journey. As these were typed during live lecture, you may find some mistakes/typos scattered throughout the notes, please let me know through my [email](mailto:ducvu2718@ucla.edu) if you spot any of them. 
 
-As this is still my first year at UCLA, I will update this list more frequently as I take more courses here. In fact, I do actively maintain a [Github repo](https://github.com/tducvu/LectureNotes) where I update the notes of some of the math classes that I have during the time on a weekly basis, so keep an eye out for them if you're interested.
+As I progress through my last undergraduate year, I will update this list more frequently as I take more courses here. In fact, I do actively maintain a [Github repo](https://github.com/tducvu/LectureNotes) where I update the notes of some of the math classes that I have during the time on a weekly basis, so keep an eye out for them if you're interested.
 {::options parse_block_html="true" /}
 <div class="notes">
     <font size="+2.3"><b>University of California, Los Angeles</b></font>
@@ -28,10 +28,12 @@ As this is still my first year at UCLA, I will update this list more frequently 
         <br>Combined notes of the real analysis sequence.
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
+        <!--- 
         <li> <a
-        href="https://github.com/tducvu/LectureNotes/blob/master/ML-156/master.pdf">
-        Math 156 - Machine Learning (In Progress)</a></li>
+        href="/assets/lecturenotes/ml.pdf">
+        Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
+        -->
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
         <br>Instructed by Shuang Li (Spring 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>

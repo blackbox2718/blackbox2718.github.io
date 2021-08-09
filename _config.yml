@@ -17,7 +17,7 @@ timezone: America/Los_Angeles
 # --------------------------
 title: Fragments of a Dot
 
-tagline: My PIC16B Blog   # it will display as the sub-title
+tagline: Duc Vu   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A blog for Python blogging
