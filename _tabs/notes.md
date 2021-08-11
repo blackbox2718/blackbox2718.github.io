@@ -14,6 +14,8 @@ As I progress through my last undergraduate year, I will update this list more f
 <div class="notes">
     <font size="+2.3"><b>University of California, Los Angeles</b></font>
     <ul>
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Stats-100B/master.pdf">Stats 100B - Intro to Mathematical Statistics</a></li>
+        <br>Instructed by Nicolas Christou (Summer 2021).
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Fall 2020).
         <li> <a href="/assets/lecturenotes/la2.pdf">Math 115B - Linear Algebra</a></li>
@@ -28,12 +30,8 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Combined notes of the real analysis sequence.
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
-        <!--- 
-        <li> <a
-        href="/assets/lecturenotes/ml.pdf">
-        Math 156 - Machine Learning</a></li>
+        <li> <a href="/assets/lecturenotes/ml.pdf">Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
-        -->
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
         <br>Instructed by Shuang Li (Spring 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
