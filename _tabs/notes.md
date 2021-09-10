@@ -14,7 +14,7 @@ As I progress through my last undergraduate year, I will update this list more f
 <div class="notes">
     <font size="+2.3"><b>University of California, Los Angeles</b></font>
     <ul>
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Stats-100B/master.pdf">Stats 100B - Intro to Mathematical Statistics</a></li>
+        <li> <a href="/assets/lecturenotes/stats100b.pdf">Stats 100B - Intro to Mathematical Statistics</a></li>
         <br>Instructed by Nicolas Christou (Summer 2021).
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Fall 2020).
