@@ -7,7 +7,7 @@ order: 2
 
 I type up my math notes during lecture using $$\LaTeX$$ with the help of **latexmk** (live-Tex) for real-time compiling and **Vim** as a text editor. I am hugely inspired by and have learnt lots of things from Gilles Castel. For tips and tricks on how to push your note taking skills to a whole new level, please refer to his amazing works at his [blog site](https://castel.dev). Note that in order to replicate his set up, you have to be somewhat familiar with using Vim and Vimscript, which have a pretty steep learning curve, and also some basic knowledge of using the command line.
 
-On this page, you can find most of the course notes that I have taken so far at UCLA in my undergrad with the addition two last math classes at PCC that marks the beginning of this whole journey. As these were typed during live lecture, you may find some mistakes/typos scattered throughout the notes, please let me know through my [email](mailto:ducvu2718@ucla.edu) if you spot any of them. 
+On this page, you can find most of the course notes that I have taken/audited so far at UCLA in my undergrad with the addition two last math classes at PCC that marks the beginning of this whole journey. As these were typed during live lecture, you may find some mistakes/typos scattered throughout the notes, please let me know through my [email](mailto:ducvu2718@ucla.edu) if you spot any of them. 
 
 As I progress through my last undergraduate year, I will update this list more frequently as I take more courses here. In fact, I do actively maintain a [Github repo](https://github.com/tducvu/LectureNotes) where I update the notes of some of the math classes that I have during the time on a weekly basis, so keep an eye out for them if you're interested.
 {::options parse_block_html="true" /}
@@ -16,6 +16,8 @@ As I progress through my last undergraduate year, I will update this list more f
     <ul>
         <li> <a href="/assets/lecturenotes/stats100b.pdf">Stats 100B - Intro to Mathematical Statistics</a></li>
         <br>Instructed by Nicolas Christou (Summer 2021).
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/LinearModel-100C/master.pdf">Stats 100C - Linear Models (In Progress)</a></li>
+        <br>Instructed by Nicolas Christou (Fall 2021).
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Fall 2020).
         <li> <a href="/assets/lecturenotes/la2.pdf">Math 115B - Linear Algebra</a></li>
@@ -30,12 +32,20 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Combined notes of the real analysis sequence.
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/ODE-135/master.pdf">Math 135 - Differential Equations (In Progress)</a></li>
+        <br>Instructed by Eric Hester (Fall 2021).
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Modeling-142/master.pdf">Math 142 - Mathematical Modeling (In Progress)</a></li>
+        <br>Instructed by Longxiu Huang (Fall 2021).
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/NumAnalysisI-151A/master.pdf">Math 151A - Applied Numerical Methods I (In Progress)</a></li>
+        <br>Instructed by Chenfanfu Jiang (Fall 2021).
         <li> <a href="/assets/lecturenotes/ml.pdf">Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
         <br>Instructed by Shuang Li (Spring 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
         <br>Instructed by Hung Nguyen (Fall 2020).
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/ML-231A/master.pdf">Stats 231A - Pattern Recognition and Machine Learning (In Progress)</a></li>
+        <br>Instructed by Ying Nian Wu (Fall 2021).
     </ul>
     <font size="+2.3"><b>Pasadena City College</b></font>
     <ul>
