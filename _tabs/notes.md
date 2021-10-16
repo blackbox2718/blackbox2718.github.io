@@ -44,8 +44,6 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Instructed by Shuang Li (Spring 2021).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
         <br>Instructed by Hung Nguyen (Fall 2020).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/ML-231A/master.pdf">Stats 231A - Pattern Recognition and Machine Learning (In Progress)</a></li>
-        <br>Instructed by Ying Nian Wu (Fall 2021).
     </ul>
     <font size="+2.3"><b>Pasadena City College</b></font>
     <ul>
