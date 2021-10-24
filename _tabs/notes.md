@@ -16,7 +16,7 @@ As I progress through my last undergraduate year, I will update this list more f
     <ul>
         <li> <a href="/assets/lecturenotes/stats100b.pdf">Stats 100B - Intro to Mathematical Statistics</a></li>
         <br>Instructed by Nicolas Christou (Summer 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/LinearModel-100C/master.pdf">Stats 100C - Linear Models (In Progress)</a></li>
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/100C-LinearModel/master.pdf">Stats 100C - Linear Models (In Progress)</a></li>
         <br>Instructed by Nicolas Christou (Fall 2021).
         <li> <a href="/assets/lecturenotes/la1.pdf">Math 115AH - Honors Linear Algebra</a></li>
         <br>Instructed by Richard Elman (Fall 2020).
@@ -32,11 +32,11 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Combined notes of the real analysis sequence.
         <li> <a href="/assets/lecturenotes/node.pdf">Math 134 - Nonlinear ODE</a></li>
         <br>Instructed by Matthias Wink (Winter 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/ODE-135/master.pdf">Math 135 - Differential Equations (In Progress)</a></li>
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/135-ODE/master.pdf">Math 135 - Differential Equations (In Progress)</a></li>
         <br>Instructed by Eric Hester (Fall 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/Modeling-142/master.pdf">Math 142 - Mathematical Modeling (In Progress)</a></li>
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/142-Modeling/master.pdf">Math 142 - Mathematical Modeling (In Progress)</a></li>
         <br>Instructed by Longxiu Huang (Fall 2021).
-        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/NumAnalysisI-151A/master.pdf">Math 151A - Applied Numerical Methods I (In Progress)</a></li>
+        <li> <a href="https://github.com/tducvu/LectureNotes/blob/master/151A-NumAnalysisI/master.pdf">Math 151A - Applied Numerical Methods I (In Progress)</a></li>
         <br>Instructed by Chenfanfu Jiang (Fall 2021).
         <li> <a href="/assets/lecturenotes/ml.pdf">Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
