@@ -9,3 +9,4 @@ gem 'html-proofer'
 gem "jekyll-theme-chirpy"
 
 gem "webrick", "~> 1.7"
+gem "ffi"

@@ -34,9 +34,9 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Instructed by Matthias Wink (Winter 2021).
         <li> <a href="/assets/lecturenotes/ode.pdf">Math 135 - Differential Equations</a></li>
         <br>Instructed by Eric Hester (Fall 2021).
-        <li> <a href="assets/lecturenotes/modeling.pdf">Math 142 - Mathematical Modeling</a></li>
+        <li> <a href="/assets/lecturenotes/modeling.pdf">Math 142 - Mathematical Modeling</a></li>
         <br>Instructed by Longxiu Huang (Fall 2021).
-        <li> <a href="assets/lecturenotes/numanalysis1.pdf">Math 151A - Applied Numerical Methods I</a></li>
+        <li> <a href="/assets/lecturenotes/numanalysis1.pdf">Math 151A - Applied Numerical Methods I</a></li>
         <br>Instructed by Chenfanfu Jiang (Fall 2021).
         <li> <a href="/assets/lecturenotes/ml.pdf">Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
