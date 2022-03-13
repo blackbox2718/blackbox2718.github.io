@@ -38,6 +38,8 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Instructed by Longxiu Huang (Fall 2021).
         <li> <a href="/assets/lecturenotes/numanalysis1.pdf">Math 151A - Applied Numerical Methods I</a></li>
         <br>Instructed by Chenfanfu Jiang (Fall 2021).
+        <li> <a href="/assets/lecturenotes/numanalysis2.pdf">Math 151B - Applied Numerical Methods II</a></li>
+        <br>Instructed by Halyun Jeong (Winter 2022).
         <li> <a href="/assets/lecturenotes/ml.pdf">Math 156 - Machine Learning</a></li>
         <br>Instructed by Dominique Zosso (Summer 2021).
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
