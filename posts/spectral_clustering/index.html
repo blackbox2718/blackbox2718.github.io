@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="en-US" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="pv-cache-enabled" content="false"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="Spectral Clustering" /><meta name="author" content="Duc Vu" /><meta property="og:locale" content="en_US" /><meta name="description" content="In this blog post, we will study and create a spectral clustering algorithm which is basically used in exploratory data analysis to divide data points into different group where each group has their own characteristics/features." /><meta property="og:description" content="In this blog post, we will study and create a spectral clustering algorithm which is basically used in exploratory data analysis to divide data points into different group where each group has their own characteristics/features." /><link rel="canonical" href="https://tducvu.github.io/posts/spectral_clustering/" /><meta property="og:url" content="https://tducvu.github.io/posts/spectral_clustering/" /><meta property="og:site_name" content="Fragments of a Dot" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-04-30T18:00:00-07:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Spectral Clustering" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@Duc Vu" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Duc Vu"},"dateModified":"2021-04-30T18:00:00-07:00","datePublished":"2021-04-30T18:00:00-07:00","description":"In this blog post, we will study and create a spectral clustering algorithm which is basically used in exploratory data analysis to divide data points into different group where each group has their own characteristics/features.","headline":"Spectral Clustering","mainEntityOfPage":{"@type":"WebPage","@id":"https://tducvu.github.io/posts/spectral_clustering/"},"url":"https://tducvu.github.io/posts/spectral_clustering/"}</script><title>Spectral Clustering | Fragments of a Dot</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-H9EMS1Q5X4"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-H9EMS1Q5X4'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/images/ducvu.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Fragments of a Dot</a></div><div class="site-subtitle font-italic">Duc Vu</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a><li class="nav-item"> <a href="/notes/" class="nav-link"> <i class="fa-fw fas fa-book ml-xl-3 mr-xl-3 unloaded"></i> <span>NOTES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/tducvu" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://facebook.com/tducvu.24" aria-label="facebook" class="order-4" target="_blank" rel="noopener"> <i class="fab fa-facebook"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['ducvu2718','ucla.edu'].join('@')" aria-label="email" class="order-5" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Spectral Clustering</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Spectral Clustering</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Apr 30, 2021, 6:00 PM -0700" > Apr 30, 2021 <i class="unloaded">2021-04-30T18:00:00-07:00</i> </span> by <span class="author"> Duc Vu </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="3493 words">19 min</span></div></div><div class="post-content"><p>In this blog post, we will study and create a <a href="https://en.wikipedia.org/wiki/Spectral_clustering">spectral clustering</a> algorithm which is basically used in exploratory data analysis to divide data points into different group where each group has their own characteristics/features.</p><h3 id="notation">Notation</h3><p>In all the math below:</p><ul><li>Boldface capital letters like \(\mathbf{A}\) refer to matrices (2d arrays of numbers).<li>Boldface lowercase letters like \(\mathbf{v}\) refer to vectors (1d arrays of numbers).<li>\(\mathbf{A}\mathbf{B}\) refers to a matrix-matrix product (<code class="language-plaintext highlighter-rouge">A@B</code>). \(\mathbf{A}\mathbf{v}\) refers to a matrix-vector product (<code class="language-plaintext highlighter-rouge">A@v</code>).</ul><h2 id="introduction">Introduction</h2><p><em>Spectral clustering</em> allows us to extract meaningful information from data sets with complex structures. It’s one of the most widely used techniques in data exploratory process. Before delving into this, one may ask what kind of data sets that need to be analyzed using spectral clustering. Before addressing that question, let’s take a look at some examples where we actually do not need the help from spectral clustering algorithm.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># import needed libraries
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+<span class="c1"># number of data points
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1111</span><span class="p">)</span>
+<span class="c1"># make two "blobs" of data points
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cluster_std</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="c1"># plot 
+</span><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e2980a0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_2_1.png" alt="png" /></p><p>Here we observe that the data is divided into two distinct regions ,i.e. two different blobs. In essence, <em>clustering</em> refers to the task of separating this data set into the two natural “blobs.” K-means is a very common way to achieve this task, which has good performance on circular-ish blobs like these.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c1"># specify two clusters
+</span><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">km</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">color_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">'blue'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s">'purple'</span><span class="p">}</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">km</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span>
+
+<span class="c1"># plot with color indication for each cluster
+</span><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e1aec10&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_4_1.png" alt="png" /></p><p>That looks good. Now, let’s explore something a bit more “erratic”. Observe the following data set in which when plotted has a crescent shape.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># generate a data sets with "crescent moon" shape
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="c1"># plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e17cee0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_6_1.png" alt="png" /></p><p>We can still make out two meaningful clusters in the data, but now they aren’t blobs but crescents. As before, the Euclidean coordinates of the data points are contained in the matrix <code class="language-plaintext highlighter-rouge">X</code>, while the labels of each point are contained in <code class="language-plaintext highlighter-rouge">y</code>. Now k-means won’t work so well, because k-means is, by design, looking for circular clusters.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">km</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">km</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e08a940&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_8_1.png" alt="png" /></p><p>Without a doubt, we can observe that the division is completely wrong, and k-means is definitely not the best algorithm for this task. So this is where spectral clustering comes to the rescue. In the following sections, we will create and implement the algorithm which would correctly identify the two crescents.</p><h2 id="similarity-matrix">Similarity Matrix</h2><p>One of the first steps we need to perform is to create a <em>similarity matrix</em> \(\mathbf{A}\) in which \(\mathbf{A}_{ij}\) represents the measure of similarity between data points of indices \(i\) and \(j\). There are several ways to measure it, and for this post, we will be using \(\epsilon\)-neighborhood method. Specifically, when constructing the similarity matrix, if the distance between any two entry is within \(\epsilon\) to each other, then we assign 1 to it with the exception that everything along the diagonal must be 0. For any pairwise distance that is not within the \(\epsilon\)-neighborhood, we assign 0 to those entries.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1"># a library to compute pairwise distance
+</span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">pairwise_distances</span>
+
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="c1"># compute the pairwise distances 
+</span><span class="n">A</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># any distance entry greater or equal to epsilon is set to 0
+</span><span class="n">A</span><span class="p">[</span><span class="n">A</span> <span class="o">&gt;=</span> <span class="n">epsilon</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># any distance entry less than epsilon is set to 1
+</span><span class="n">A</span><span class="p">[(</span><span class="n">A</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">A</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># fill the diagonal entries with 0
+</span><span class="n">np</span><span class="p">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># let's take a look
+</span><span class="n">A</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 1., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 1., 1.],
+       [0., 0., 1., ..., 1., 0., 1.],
+       [0., 0., 0., ..., 1., 1., 0.]])
+</pre></table></code></div></div><h2 id="normalized-cut">Normalized Cut</h2><p>The matrix <code class="language-plaintext highlighter-rouge">A</code> now contains information about which points are near (within distance <code class="language-plaintext highlighter-rouge">epsilon</code>) which other points. We now pose the task of clustering the data points in <code class="language-plaintext highlighter-rouge">X</code> as the task of partitioning the rows and columns of <code class="language-plaintext highlighter-rouge">A</code>.</p><p>Let \(d_i = \sum_{j = 1}^n a_{ij}\) be the \(i\)-th row-sum of \(\mathbf{A}\), which is also called the <em>degree</em> of \(i\). Let \(C_0\) and \(C_1\) be two clusters of the data points. We assume that every data point is in either \(C_0\) or \(C_1\). The cluster membership as being specified by <code class="language-plaintext highlighter-rouge">y</code>. We think of <code class="language-plaintext highlighter-rouge">y[i]</code> as being the label of point <code class="language-plaintext highlighter-rouge">i</code>. So, if <code class="language-plaintext highlighter-rouge">y[i] = 1</code>, then point <code class="language-plaintext highlighter-rouge">i</code> (and therefore row \(i\) of \(\mathbf{A}\)) is an element of cluster \(C_1\).</p><p>The <em>binary norm cut objective</em> of a matrix \(\mathbf{A}\) is the function</p>\[N_{\mathbf{A}}(C_0, C_1)\equiv \mathbf{cut}(C_0, C_1)\left(\frac{1}{\mathbf{vol}(C_0)} + \frac{1}{\mathbf{vol}(C_1)}\right)\;.\]<p>In this expression,</p><ul><li>\(\mathbf{cut}(C_0, C_1) \equiv \sum_{i \in C_0, j \in C_1} a_{ij}\) is the <em>cut</em> of the clusters \(C_0\) and \(C_1\).<li>\(\mathbf{vol}(C_0) \equiv \sum_{i \in C_0}d_i\), where \(d_i = \sum_{j = 1}^n a_{ij}\) is the <em>degree</em> of row \(i\) (the total number of all other rows related to row \(i\) through \(A\)). The <em>volume</em> of cluster \(C_0\) is a measure of the size of the cluster.</ul><p>A pair of clusters \(C_0\) and \(C_1\) is considered to be a “good” partition of the data when \(N_{\mathbf{A}}(C_0, C_1)\) is small. To see why, let’s look at each of the two factors in this objective function separately.</p><h3 id="1-the-cut-term">1. The Cut Term</h3><p>First, the cut term \(\mathbf{cut}(C_0, C_1)\) is the number of nonzero entries in \(\mathbf{A}\) that relate points in cluster \(C_0\) to points in cluster \(C_1\). A small cut indicates that there are significant amount of points in \(C_0\) which are far away from points in \(C_1\). Notice that this makes sense mathematically because of the way define we define our similarity matrix, i.e. any pairwise distance (entry) which is not within \(\epsilon\) distance is set to 0.</p><p>So, let’s define a function to compute the cut term. From the mathematical expression of a cut, we can simply do so by summing up all \(A_{ij}\) for each pair of points \((i,j)\) in different clusters, \(C_0\) and \(C_1\).</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s">"""
+    Input 
+    -----
+    A(2d numpy array): similarity matrix
+    y(1d numpy array): labels
+    
+    Output
+    ------
+    numerical value of the cut of the clusters C0 and C1
+    """</span>
+    <span class="n">cut_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># loop through each row and column entry
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="c1"># make sure these are in different clusters
+</span>            <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">cut_sum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+    <span class="c1"># counteract the effect of double counting
+</span>    <span class="k">return</span> <span class="p">(</span><span class="n">cut_sum</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></table></code></div></div><p>In order to see that the cut objective favors the true label over the random one, we will generate a random 1d numpy array filled with 0 and 1. Then, we will compare the cut term of each one.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">cut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">cut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">rand</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>(13.0, 1141.0)
+</pre></table></code></div></div><p>Indeed, the cut term of the true labels is considerably smaller than the cut of random label. This can be explained from the fact that the random label array imposes a different data structure on \(A\) which statistically increases the probability of encountering different clusters within the array. This does lead the cut term of <code class="language-plaintext highlighter-rouge">rand</code> to be significantly larger than <code class="language-plaintext highlighter-rouge">y</code>.</p><h3 id="2-the-volume-term">2. The Volume Term</h3><p>Now take a look at the second factor in the norm cut objective. This is the <em>volume term</em>. As mentioned above, the <em>volume</em> of cluster \(C_0\) is a measure of how “big” cluster \(C_0\) is. If we choose cluster \(C_0\) to be small, then \(\mathbf{vol}(C_0)\) will be small and \(\frac{1}{\mathbf{vol}(C_0)}\) will be large, leading to an undesirable higher objective value.</p><p>Synthesizing, the binary normcut objective asks us to find clusters \(C_0\) and \(C_1\) such that:</p><ol><li>There are relatively few entries of \(\mathbf{A}\) that join \(C_0\) and \(C_1\).<li>Neither \(C_0\) and \(C_1\) are too small.</ol><p>So, let’s now write a function which computes that volumes of clusters \(C_0\) and \(C_1\).</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">vols</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s">"""
+    Input
+    -----
+    A(2d numpy array): similarity matrix
+    y(1d numpy array): labels
+    
+    Output
+    ------
+    A tuple of volumes of C_0 and C_1
+    """</span>
+    <span class="c1"># gather all rows of cluster 0
+</span>    <span class="n">v0</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># compute its sum
+</span>    <span class="n">v0_sum</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+    <span class="c1"># gather all rows with cluster 1
+</span>    <span class="n">v1</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># compute its sum
+</span>    <span class="n">v1_sum</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">v0_sum</span><span class="p">,</span> <span class="n">v1_sum</span><span class="p">)</span>
+</pre></table></code></div></div><p>Recall that the binary normalized cut objective of a similarity matrix \(A\) with two clusters \(C_0\) and \(C_1\) is defined as</p>\[N_{\mathbf{A}}(C_0, C_1)\equiv \mathbf{cut}(C_0, C_1)\left(\frac{1}{\mathbf{vol}(C_0)} + \frac{1}{\mathbf{vol}(C_1)}\right)\;.\]<p>Let’s then define a function called <code class="language-plaintext highlighter-rouge">normcut()</code> for the above expression.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">normcut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">v0</span><span class="p">,</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">vols</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">v0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">v1</span><span class="p">)</span>
+</pre></table></code></div></div><p>Now, we compute and compare the normcut value of the true label <code class="language-plaintext highlighter-rouge">y</code> and the artificial label <code class="language-plaintext highlighter-rouge">rand</code> we generated above.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">normcut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">normcut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">rand</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>(0.011518412331615225, 1.0121314202822829)
+</pre></table></code></div></div><p>As we may deduce from the value of the cuts between two labels, it’s intuitive here that the normcut of the true label is about 100x times smaller than the one which belongs to the random label.</p><h2 id="orthogonal-objective-optimization">Orthogonal Objective Optimization</h2><p>We have now defined a normalized cut objective which takes small values when the input clusters are joined by relatively few entries in \(A\) and not too small. One approach to clustering is to try to find a cluster vector <code class="language-plaintext highlighter-rouge">y</code> such that <code class="language-plaintext highlighter-rouge">normcut(A,y)</code> is small. However, this is an NP-hard combinatorial optimization problem, which means that may not be possible to find the best clustering in practical time, even for relatively small data sets. We need a math trick!</p><p>Here’s the trick: define a new vector \(\mathbf{z} \in \mathbb{R}^n\) such that:</p>\[z_i = \begin{cases} \frac{1}{\mathbf{vol}(C_0)} &amp;\quad \text{if } y_i = 0 \\ -\frac{1}{\mathbf{vol}(C_1)} &amp;\quad \text{if } y_i = 1 \\ \end{cases}\]<p>Note that the signs of the elements of \(\mathbf{z}\) contain all the information from \(\mathbf{y}\): if \(i\) is in cluster \(C_0\), then \(y_i = 0\) and \(z_i &gt; 0\).</p><p>For any math major/enthusiasts, you’re tasked with showing the following,</p>\[\mathbf{N}_{\mathbf{A}}(C_0, C_1) = 2\frac{\mathbf{z}^T (\mathbf{D} - \mathbf{A})\mathbf{z}}{\mathbf{z}^T\mathbf{D}\mathbf{z}}\;,\]<p>where \(\mathbf{D}\) is the diagonal matrix with nonzero entries \(d_{ii} = d_i\), and where \(d_i = \sum_{j = 1}^n a_i\) is the degree (row-sum) from before.</p><p>Let’s now define a function which is used to compute \(\mathbf{z}\) using the formula above.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># create and fill z with some an artificial value
+</span>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1"># define z according to the definition
+</span>    <span class="n">z</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">vols</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">z</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">vols</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">z</span>
+</pre></table></code></div></div><p>To check whether our functions works and the mathematical expression above is indeed valid, we can check by calculating both sides and comparing them. Note that it’s numerically impossible for the computer to compute these terms with exact accuracy, so we will use <code class="language-plaintext highlighter-rouge">np.isclose()</code> as an alternative.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="c1"># initialize D with an artificial value
+</span><span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="c1"># each entry d_ii in the diagonal corresponds to the sum of each row ith
+</span><span class="n">np</span><span class="p">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="n">z</span><span class="o">@</span><span class="p">(</span><span class="n">D</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">@</span><span class="n">z</span>
+<span class="n">bottom</span> <span class="o">=</span> <span class="n">z</span><span class="o">@</span><span class="n">D</span><span class="o">@</span><span class="n">z</span>
+
+<span class="c1"># drop the factor of 2 because calculating undirected cut earlier
+</span><span class="n">np</span><span class="p">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">normcut</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">top</span><span class="o">/</span><span class="n">bottom</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>True
+</pre></table></code></div></div><p>We also need to check whether the identity \(\mathbf{z}^T\mathbf{D}\mathbb{1} = 0\), where \(\mathbb{1}\) is the vector of <code class="language-plaintext highlighter-rouge">n</code> ones (i.e. <code class="language-plaintext highlighter-rouge">np.ones(n)</code>). This identity effectively says that \(\mathbf{z}\) should contain roughly as many positive as negative entries.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">np</span><span class="p">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">z</span><span class="p">.</span><span class="n">T</span><span class="o">@</span><span class="n">D</span><span class="o">@</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>True
+</pre></table></code></div></div><p>Observe that the problem of minimizing the normcut objective is mathematically related to the problem of minimizing the function</p>\[R_\mathbf{A}(\mathbf{z})\equiv \frac{\mathbf{z}^T (\mathbf{D} - \mathbf{A})\mathbf{z}}{\mathbf{z}^T\mathbf{D}\mathbf{z}}\]<p>subject to the condition \(\mathbf{z}^T\mathbf{D}\mathbb{1} = 0\). It’s actually possible to convert this condition into the optimization, by substituting for \(\mathbf{z}\) the orthogonal complement of \(\mathbf{z}\) relative to \(\mathbf{D}\mathbf{1}\).</p><p>Use the <code class="language-plaintext highlighter-rouge">minimize</code> function from <code class="language-plaintext highlighter-rouge">scipy.optimize</code> to minimize the function <code class="language-plaintext highlighter-rouge">orth_obj</code> with respect to \(\mathbf{z}\). Note that this computation might take a little while. Explicit optimization can be pretty slow! Give the minimizing vector a name <code class="language-plaintext highlighter-rouge">z_</code>.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="c1"># define the orthogonal/normal vectors
+</span><span class="k">def</span> <span class="nf">orth</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">u</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">v</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span>
+
+<span class="c1"># convert D to a 1d array
+</span><span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> 
+<span class="n">d</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="n">e</span>
+
+<span class="c1"># define the orthogonal objective which would be used for optimization
+</span><span class="k">def</span> <span class="nf">orth_obj</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">z_o</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="n">orth</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">z_o</span> <span class="o">@</span> <span class="p">(</span><span class="n">D</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">z_o</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">z_o</span> <span class="o">@</span> <span class="n">D</span> <span class="o">@</span> <span class="n">z_o</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="n">z_</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">orth_obj</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></table></code></div></div><p><strong>Note</strong>: there’s a cheat going on here! We originally specified that the entries of \(\mathbf{z}\) should take only one of two values (back in Part C), whereas now we’re allowing the entries to have <em>any</em> value! This means that we are no longer exactly optimizing the normcut objective, but rather an approximation. This cheat is so common that deserves a name: it is called the <em>continuous relaxation</em> of the normcut problem.</p><p>Now, it’s time to visualize what we have achieved so far. Let’s see if we’re close to cluster the data.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="c1"># specify colors for scatter plot based on certain conditions
+</span><span class="k">def</span> <span class="nf">clustering_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">sign</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="s">"purple"</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.0015</span> <span class="k">else</span> <span class="s">"blue"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sign</span><span class="p">]</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">color</span><span class="p">)</span>
+<span class="n">clustering_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">z_</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_35_0.png" alt="png" /></p><p>Wow, that’s pretty close. There’s only a small portion of the purple crescent which gets confused to be blue. So <code class="language-plaintext highlighter-rouge">minimize()</code> does a great job here, but it’s still flawed. There’s further works that need to be done. Also, notice that we use -0.0015 instead of 0 to differentiate between the negative and positive values due to some numerical errors; we suspect this to be a problem from <code class="language-plaintext highlighter-rouge">minimize()</code> as well since there’s a clear distinction between them when we define <code class="language-plaintext highlighter-rouge">z</code> based on the label of each data point.</p><h2 id="the-eivenvectors-of-laplacian-matrix">The Eivenvectors of Laplacian Matrix</h2><p>Explicitly optimizing the orthogonal objective is <em>way</em> too slow to be practical. If spectral clustering required that we do this each time, no one would use it.</p><p>The reason that spectral clustering actually matters, and indeed the reason that spectral clustering is called <em>spectral</em> clustering, is that we can actually solve the problem from Part E using eigenvalues and eigenvectors of matrices.</p><p>Recall that what we would like to do is minimize the function</p>\[R_\mathbf{A}(\mathbf{z})\equiv \frac{\mathbf{z}^T (\mathbf{D} - \mathbf{A})\mathbf{z}}{\mathbf{z}^T\mathbf{D}\mathbf{z}}\]<p>with respect to \(\mathbf{z}\), subject to the condition \(\mathbf{z}^T\mathbf{D}\mathbb{1} = 0\).</p><p>The Rayleigh-Ritz Theorem states that the minimizing \(\mathbf{z}\) must be the solution with smallest eigenvalue of the generalized eigenvalue problem</p>\[(\mathbf{D} - \mathbf{A}) \mathbf{z} = \lambda \mathbf{D}\mathbf{z}\;, \quad \mathbf{z}^T\mathbf{D}\mathbb{1} = 0\]<p>which is equivalent to the standard eigenvalue problem</p>\[\mathbf{D}^{-1}(\mathbf{D} - \mathbf{A}) \mathbf{z} = \lambda \mathbf{z}\;, \quad \mathbf{z}^T\mathbb{1} = 0\;.\]<p>Why is this helpful? Well, \(\mathbb{1}\) is actually the eigenvector with smallest eigenvalue of the matrix \(\mathbf{D}^{-1}(\mathbf{D} - \mathbf{A})\).</p><blockquote><p>So, the vector \(\mathbf{z}\) that we want must be the eigenvector with the <em>second</em>-smallest eigenvalue.</p></blockquote><p>Construct the matrix \(\mathbf{L} = \mathbf{D}^{-1}(\mathbf{D} - \mathbf{A})\), which is often called the (normalized) <em>Laplacian</em> matrix of the similarity matrix \(\mathbf{A}\).</p><p>Let’s now find this eigenvector and call it <code class="language-plaintext highlighter-rouge">z_eig</code>.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="c1"># define the Laplacian matrix
+</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">A</span><span class="p">)</span>
+<span class="c1"># compute the eigenvalues and eigenvectors of L
+</span><span class="n">eigval</span><span class="p">,</span> <span class="n">eigvec</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># set the smallest eigenvalue to be something greater than itself
+</span><span class="n">eigval</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">eigval</span> <span class="o">==</span> <span class="n">eigval</span><span class="p">.</span><span class="nb">min</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># the second smallest eigenvalue now is the min so we can set z_eig accordingly
+</span><span class="n">z_eig</span> <span class="o">=</span> <span class="n">eigvec</span><span class="p">[:,</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">eigval</span> <span class="o">==</span> <span class="n">eigval</span><span class="p">.</span><span class="nb">min</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+</pre></table></code></div></div><p>We plot the data again to see how <code class="language-plaintext highlighter-rouge">z_eig</code> affects the clustering.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">clustering_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">z_eig</span><span class="p">)</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_40_0.png" alt="png" /></p><p>Impressive! Spectral clustering works almost perfectly as there is only one point that is purple point mistook to be blue at the top left.</p><h2 id="spectral-clustering">Spectral Clustering</h2><p>Now, let’s define a function that sums up everything that we have done from the beginning up to this part. This function can be considered as a compact version of the spectral clustering algorithm.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="s">"""
+    FUNCTION
+    --------
+    Perform spectral clustering and generate an array of labels
+    which specifies what group a data point in X belongs to
+    
+    PARAMETERS
+    ----------
+    X      : input data (numpy array)
+    epsilon: distance threshold to build a similarity matrix (float)
+    
+    RETURN
+    ------
+    an array of binary labels of each data point in X
+    """</span>
+    <span class="c1"># construct the similarity matrix
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">A</span> <span class="o">&gt;=</span> <span class="n">epsilon</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">A</span><span class="p">[(</span><span class="n">A</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">A</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="c1"># construct the Laplacian matrix and
+</span>    <span class="c1"># compute the eigenvector correspond to the second-smallest 
+</span>    <span class="c1"># eigenvalue of the Laplacian
+</span>    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">eigval</span><span class="p">,</span> <span class="n">eigvec</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">A</span><span class="p">))</span>
+    
+    <span class="c1"># eigval is placed in an increasing order so the second column is what we want
+</span>    <span class="c1"># and the negative values correspond to 1 and positive values correspond to 0
+</span>    <span class="k">return</span> <span class="p">(</span><span class="n">eigvec</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span>
+</pre></table></code></div></div><p>As usual, we need to test to see whether the function works as we expect it to.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632dedc850&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_45_1.png" alt="png" /></p><p>Woo-hoo! We just successfully implemented and packaged a concrete version of spectral clustering algorithm.</p><p>So what’s next? At this point, we will run a few more experiments using our function but with generating different data sets using <code class="language-plaintext highlighter-rouge">make_moons</code>. In details, we want to investigate how does the <code class="language-plaintext highlighter-rouge">noise</code> affect the accuracy of our algorithm.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="c1"># let's increase to 1000 data points as our function is quite fast now
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="c1"># low noise level
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e4b5ee0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_48_1.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># + .1 to the noise
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e212fd0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_49_1.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># + .15 to the noise
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632df7a9d0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_50_1.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># + .1 to the noise
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632e1c5400&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_51_1.png" alt="png" /></p><p>After this point, if we keep increasing the noise, we will keep encounter the error where the matrix generated is singular which ,mathematically speaking, would prevent us from computing the inverse in one of the steps shown above. An interesting pattern can be observed here is that the higher the noise is the more the shape diverges from a crescent. At <code class="language-plaintext highlighter-rouge">noise = 0.3</code>, we can see that the plot no longer looks like a crescent but rather a chunk of data with a not very clear pattern. That’s why it makes sense that our algorithm decides to split this shape into half with a straight line.</p><p>To further test the function, why we don’t try with some more data sets; in this case, a bull-eye!</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632c621df0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_54_1.png" alt="png" /></p><p>There are two concentric circles. As before k-means will not do well here at all.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">km</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">km</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632c580550&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_56_1.png" alt="png" /></p><p>Let’s see how our function performs.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632c553940&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_58_1.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632c35ddf0&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_59_1.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spectral_clustering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>&lt;matplotlib.collections.PathCollection at 0x7f632c2bd430&gt;
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/images/2021-04-30-homework2_files/2021-04-30-homework2_60_1.png" alt="png" /></p><p>It appears that <code class="language-plaintext highlighter-rouge">epsilon = 0.5</code> is the optimal value that supports the function to correctly predict the two regions.</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/pic16b-blog/'>PIC16B-blog</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/matplotlib/" class="post-tag no-text-decoration" >matplotlib</a> <a href="/tags/linear-algebra/" class="post-tag no-text-decoration" >linear-algebra</a> <a href="/tags/data-analysis/" class="post-tag no-text-decoration" >data-analysis</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Spectral Clustering - Fragments of a Dot&url=https://tducvu.github.io/posts/spectral_clustering/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Spectral Clustering - Fragments of a Dot&u=https://tducvu.github.io/posts/spectral_clustering/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Spectral Clustering - Fragments of a Dot&url=https://tducvu.github.io/posts/spectral_clustering/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/data-visualization/">data-visualization</a> <a class="post-tag" href="/tags/machine-learning/">machine-learning</a> <a class="post-tag" href="/tags/climate-change/">climate-change</a> <a class="post-tag" href="/tags/data-analysis/">data-analysis</a> <a class="post-tag" href="/tags/linear-algebra/">linear-algebra</a> <a class="post-tag" href="/tags/matplotlib/">matplotlib</a> <a class="post-tag" href="/tags/nlp/">nlp</a> <a class="post-tag" href="/tags/palmer-penguins/">palmer-penguins</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/reflection/">reflection</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/feature_selection/"><div class="card-body"> <span class="timeago small" > Mar 22, 2021 <i class="unloaded">2021-03-22T23:50:59-07:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Feature Selection Through Visualization</h3><div class="text-muted small"><p> In this very first post of PIC16B, I will demonstrate how to visualize the Palmer Penguins data set with the help of panda and seaborn which is a data visualization library based on matplotlib. Da...</p></div></div></a></div><div class="card"> <a href="/posts/noaa_visualization/"><div class="card-body"> <span class="timeago small" > Apr 14, 2021 <i class="unloaded">2021-04-14T19:57:50-07:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Data Visualization with NOAA Climate Data Set</h3><div class="text-muted small"><p> In this assignment, we will be working with the NOAA climate data set to create some interesting visualizations. \(\S 1.\) Database There are three tables that we need to create within a database ...</p></div></div></a></div><div class="card"> <a href="/posts/fake_news/"><div class="card-body"> <span class="timeago small" > May 24, 2021 <i class="unloaded">2021-05-24T22:05:01-07:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Classifying Fake News with TensorFlow</h3><div class="text-muted small"><p> Are you confident with your ability to spot fake news? Do you know that seven in ten Americans overestimate their ability in identifying false headlines? Well, one should even wonder whether what I...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/noaa_visualization/" class="btn btn-outline-primary" prompt="Older"><p>Data Visualization with NOAA Climate Data Set</p></a> <a href="/posts/fake_news/" class="btn btn-outline-primary" prompt="Newer"><p>Classifying Fake News with TensorFlow</p></a></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/tducvu">Duc Vu</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/data-visualization/">data visualization</a> <a class="post-tag" href="/tags/machine-learning/">machine learning</a> <a class="post-tag" href="/tags/climate-change/">climate change</a> <a class="post-tag" href="/tags/data-analysis/">data analysis</a> <a class="post-tag" href="/tags/linear-algebra/">linear algebra</a> <a class="post-tag" href="/tags/matplotlib/">matplotlib</a> <a class="post-tag" href="/tags/nlp/">nlp</a> <a class="post-tag" href="/tags/palmer-penguins/">palmer penguins</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/reflection/">reflection</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://tducvu.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script>
