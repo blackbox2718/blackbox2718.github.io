@@ -44,6 +44,8 @@ As I progress through my last undergraduate year, I will update this list more f
         <br>Instructed by Dominique Zosso (Summer 2021).
         <li> <a href="/assets/lecturenotes/optmz.pdf">Math 164 - Optimization</a></li>
         <br>Instructed by Shuang Li (Spring 2021).
+        <li> <a href="/assets/lecturenotes/networks.pdf">Math 168 - Intro to Networks</a></li>
+        <br>Instructed by Phil Chodrow (Spring 2022).
         <li> <a href="/assets/lecturenotes/prob.pdf">Math 170E - Intro to Probability</a></li>
         <br>Instructed by Hung Nguyen (Fall 2020).
     </ul>
